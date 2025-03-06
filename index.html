@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Image Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="gal.css">
+</head>
+<body class="theme-all">
+    <!-- Header with search bar -->
+    <header>
+        <div class="header-container">
+            <div class="app-title">Photo Gallery Pro</div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search images...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Navigation tabs -->
+    <div class="nav-container">
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-tab="all-tab" onclick="changeTab('all-tab'); document.body.className='theme-all';">
+                <i class="fas fa-images"></i>
+                <span>All Photos</span>
+            </div>
+            <div class="nav-tab" data-tab="favorites-tab" onclick="changeTab('favorites-tab'); document.body.className='theme-favorites';">
+                <i class="fas fa-heart"></i>
+                <span>Favorites</span>
+            </div>
+            <div class="nav-tab" data-tab="deleted-tab" onclick="changeTab('deleted-tab'); document.body.className='theme-deleted';">
+                <i class="fas fa-trash"></i>
+                <span>Recently Deleted</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-container">
+        <!-- All Photos Tab -->
+        <div id="all-tab" class="tab-content active">
+            <div class="section-header">
+                <div class="section-title">All Photos</div>
+                <div class="view-options">
+                    <button class="view-option active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-option" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Guitar Category -->
+            <div class="category-header">Guitars</div>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <!-- Image 1 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="acoustic_guitar.jpg" class="gallery-img" alt="Acoustic Guitar" data-title="Acoustic Guitar">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Acoustic Guitar</div>
+                            <div class="img-date">Mar 6, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 2 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="Default_guitar.jpeg" class="gallery-img" alt="Electric Guitar" data-title="Electric Guitar">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Electric Guitar</div>
+                            <div class="img-date">Mar 5, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 3 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="electric_guitar.jpg" class="gallery-img" alt="Bass Guitar" data-title="Bass Guitar">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Bass Guitar</div>
+                            <div class="img-date">Mar 4, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 4 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="classical_guitar.jpeg" class="gallery-img" alt="Classical Guitar" data-title="Classical Guitar">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Classical Guitar</div>
+                            <div class="img-date">Mar 3, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 5 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="grand-piano.png" class="gallery-img" alt="Acoustic-Electric Guitar" data-title="Acoustic-Electric Guitar">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Acoustic-Electric Guitar</div>
+                            <div class="img-date">Mar 2, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 6 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="default piano.jpeg" class="gallery-img" alt="12-String Guitar" data-title="12-String Guitar">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">12-String Guitar</div>
+                            <div class="img-date">Mar 1, 2025</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image 7 (additional) -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="digitak_piano.jpg" class="gallery-img" alt="Resonator Guitar" data-title="Resonator Guitar">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Resonator Guitar</div>
+                            <div class="img-date">Feb 28, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 8 (additional) -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="upright-piano.jpg" class="gallery-img" alt="Archtop Guitar" data-title="Archtop Guitar">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Archtop Guitar</div>
+                            <div class="img-date">Feb 27, 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Piano Category -->
+            <div class="category-header">Pianos</div>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <!-- Image 9 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="c-wind.jpg" class="gallery-img" alt="Grand Piano" data-title="Grand Piano">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Grand Piano</div>
+                            <div class="img-date">Feb 26, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 10 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="BB_wind.png" class="gallery-img" alt="Upright Piano" data-title="Upright Piano">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Upright Piano</div>
+                            <div class="img-date">Feb 25, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 11 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="picollo-wind.jpg" class="gallery-img" alt="Digital Piano" data-title="Digital Piano">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Digital Piano</div>
+                            <div class="img-date">Feb 24, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 12 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="default_wind.jpg" class="gallery-img" alt="Baby Grand Piano" data-title="Baby Grand Piano">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Baby Grand Piano</div>
+                            <div class="img-date">Feb 23, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 13 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="punjab_tabaka.jpg" class="gallery-img" alt="Concert Grand Piano" data-title="Concert Grand Piano">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Concert Grand Piano</div>
+                            <div class="img-date">Feb 22, 2025</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image 14 (additional) -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="ajarara_tabala.jpg" class="gallery-img" alt="Player Piano" data-title="Player Piano">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Player Piano</div>
+                            <div class="img-date">Feb 21, 2025</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image 15 (additional) -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="benaras_tabala.png" class="gallery-img" alt="Studio Upright Piano" data-title="Studio Upright Piano">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Studio Upright Piano</div>
+                            <div class="img-date">Feb 20, 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- String Instruments Category -->
+            <div class="category-header">String Instruments</div>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <!-- Image 16 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="full_austioc_drum.jpg" class="gallery-img" alt="Violin" data-title="Violin">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Violin</div>
+                            <div class="img-date">Feb 19, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 17 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="mini-drum-set.jpg" class="gallery-img" alt="Cello" data-title="Cello">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Cello</div>
+                            <div class="img-date">Feb 18, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 18 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="austioc_drum.jpg" class="gallery-img" alt="Viola" data-title="Viola">
+                            <div class="img-actions">
+				<button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Viola</div>
+                            <div class="img-date">Feb 18, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 19 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="electronic-drum-pad.jpeg" class="gallery-img" alt="Double Bass" data-title="Double Bass">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Double Bass</div>
+                            <div class="img-date">Feb 17, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 20 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="concert fluet.jpg" class="gallery-img" alt="Harp" data-title="Harp">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Harp</div>
+                            <div class="img-date">Feb 16, 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wind Instruments Category -->
+            <div class="category-header">Wind Instruments</div>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <!-- Image 21 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="default_fluet.jpeg" class="gallery-img" alt="Flute" data-title="Flute">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Flute</div>
+                            <div class="img-date">Feb 15, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 22 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="picollo-fluet.jpg" class="gallery-img" alt="Clarinet" data-title="Clarinet">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Clarinet</div>
+                            <div class="img-date">Feb 14, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 23 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="borque violin.jpg" class="gallery-img" alt="Saxophone" data-title="Saxophone">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Saxophone</div>
+                            <div class="img-date">Feb 13, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 24 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="default_violine.jpeg" class="gallery-img" alt="Trumpet" data-title="Trumpet">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Trumpet</div>
+                            <div class="img-date">Feb 12, 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Image 25 -->
+                    <div class="gallery-card">
+                        <div class="gallery-img-container">
+                            <img src="electric_violine.jpg" class="gallery-img" alt="Trombone" data-title="Trombone">
+                            <div class="img-actions">
+                                <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
+                                <button class="img-action-btn download"><i class="fas fa-download"></i></button>
+                                <button class="img-action-btn delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="img-title">Trombone</div>
+                            <div class="img-date">Feb 11, 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Favorites Tab -->
+        <div id="favorites-tab" class="tab-content">
+            <div class="section-header">
+                <div class="section-title">Favorite Photos</div>
+                <div class="view-options">
+                    <button class="view-option active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-option" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Placeholder for favorites - will be populated via HTML when items are favorited -->
+            <div class="gallery-container">
+                <div id="favorites-gallery" class="gallery">
+                    <!-- This will be populated with favorite items -->
+                </div>
+            </div>
+            
+            <!-- Empty state for favorites -->
+            <div id="favorites-empty" class="empty-state">
+                <div class="empty-icon"><i class="far fa-heart"></i></div>
+                <div class="empty-text">No favorites yet</div>
+                <div class="empty-subtext">Click the heart icon on any photo to add it to your favorites collection</div>
+            </div>
+        </div>
+
+        <!-- Recently Deleted Tab -->
+        <div id="deleted-tab" class="tab-content">
+            <div class="section-header">
+                <div class="section-title">Recently Deleted</div>
+                <div class="view-options">
+                    <button class="view-option active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-option" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Placeholder for deleted items - will be populated via HTML when items are deleted -->
+            <div class="gallery-container">
+                <div id="deleted-gallery" class="gallery">
+                    <!-- This will be populated with deleted items -->
+                </div>
+            </div>
+            
+            <!-- Empty state for deleted items -->
+            <div id="deleted-empty" class="empty-state">
+                <div class="empty-icon"><i class="fas fa-trash"></i></div>
+                <div class="empty-text">No recently deleted photos</div>
+                <div class="empty-subtext">Items you delete will appear here for 30 days before being permanently removed</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+            <div class="lightbox-caption"></div>
+            <button id="close-lightbox"><i class="fas fa-times"></i></button>
+            <button id="prev-img"><i class="fas fa-chevron-left"></i></button>
+            <button id="next-img"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+<script src="gallery.js"></script>
+</body>
+</html>
