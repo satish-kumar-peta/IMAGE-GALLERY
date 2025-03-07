@@ -5,7 +5,470 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Image Gallery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="gal.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            transition: background 0.5s ease;
+        }
+
+        /* Theme backgrounds for different sections */
+        body.theme-all {
+            background: linear-gradient(to bottom right, #f5f5f5, #e0e0e0);
+        }
+
+        body.theme-favorites {
+            background: linear-gradient(to bottom right, #fff0f0, #ffe0e0);
+        }
+
+        body.theme-deleted {
+            background: linear-gradient(to bottom right, #f0f0ff, #e0e0ff);
+        }
+
+        /* Header styles */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .app-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .search-container input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-container i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Navigation bar */
+        .nav-container {
+            background-color: #34495e;
+            padding: 10px 0;
+        }
+
+        .nav-tabs {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .nav-tab {
+            color: white;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab.active, .nav-tab:hover {
+            background-color: #2980b9;
+        }
+
+        .nav-tab i {
+            font-size: 16px;
+        }
+
+        /* Main content area */
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .view-options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .view-option {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .view-option.active, .view-option:hover {
+            color: #2980b9;
+        }
+
+        /* Gallery styles */
+        .gallery-container {
+            margin-top: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: white;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-img-container {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            cursor: pointer;
+        }
+
+        .gallery-card:hover .gallery-img {
+            transform: scale(1.05);
+        }
+
+        .img-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-card:hover .img-actions {
+            opacity: 1;
+        }
+
+        .img-action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .img-action-btn:hover {
+            background-color: white;
+            transform: scale(1.1);
+        }
+
+        .img-action-btn.favorite {
+            color: #e74c3c;
+        }
+
+        .img-action-btn.download {
+            color: #3498db;
+        }
+
+        .img-action-btn.delete {
+            color: #7f8c8d;
+        }
+
+        .card-footer {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .img-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .img-date {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        /* Category headers */
+        .category-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 30px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Tab content sections */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Recently deleted section */
+        #deleted-tab {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        .empty-text {
+            font-size: 18px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .empty-subtext {
+            font-size: 14px;
+            color: #95a5a6;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Favorites section */
+        #favorites-tab {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Lightbox styles */
+        #lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            position: relative;
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        #lightbox-img {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            width: 100%;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .lightbox-controls {
+            position: absolute;
+            bottom: -80px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .lightbox-control {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .lightbox-control:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        #close-lightbox {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            font-size: 30px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        #close-lightbox:hover {
+            color: #e74c3c;
+        }
+
+        #prev-img, #next-img {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            color: white;
+            background: rgba(0, 0, 0, 0.3);
+            border: none;
+            width: 50px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #prev-img {
+            left: -70px;
+            border-radius: 5px 0 0 5px;
+        }
+
+        #next-img {
+            right: -70px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        #prev-img:hover, #next-img:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-container {
+                width: 100%;
+            }
+
+            .nav-tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+
+            .nav-tab {
+                white-space: nowrap;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            #prev-img, #next-img {
+                position: static;
+                transform: none;
+                margin-top: 20px;
+                width: 80px;
+                height: 40px;
+            }
+
+            .lightbox-controls {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
 </head>
 <body class="theme-all">
     <!-- Header with search bar -->
@@ -18,6 +481,7 @@
             </div>
         </div>
     </header>
+
     <!-- Navigation tabs -->
     <div class="nav-container">
         <div class="nav-tabs">
@@ -59,7 +523,7 @@
                     <!-- Image 1 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="acoustic_guitar.jpg" class="gallery-img" alt="Acoustic Guitar" data-title="Acoustic Guitar">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Acoustic Guitar" data-title="Acoustic Guitar">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -75,7 +539,7 @@
                     <!-- Image 2 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="Default_guitar.jpeg" class="gallery-img" alt="Electric Guitar" data-title="Electric Guitar">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Electric Guitar" data-title="Electric Guitar">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -91,7 +555,7 @@
                     <!-- Image 3 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="electric_guitar.jpg" class="gallery-img" alt="Bass Guitar" data-title="Bass Guitar">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Bass Guitar" data-title="Bass Guitar">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -107,7 +571,7 @@
                     <!-- Image 4 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="classical_guitar.jpeg" class="gallery-img" alt="Classical Guitar" data-title="Classical Guitar">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Classical Guitar" data-title="Classical Guitar">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -123,7 +587,7 @@
                     <!-- Image 5 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="grand-piano.png" class="gallery-img" alt="Acoustic-Electric Guitar" data-title="Acoustic-Electric Guitar">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Acoustic-Electric Guitar" data-title="Acoustic-Electric Guitar">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -139,7 +603,7 @@
                     <!-- Image 6 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="default piano.jpeg" class="gallery-img" alt="12-String Guitar" data-title="12-String Guitar">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="12-String Guitar" data-title="12-String Guitar">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -155,7 +619,7 @@
                     <!-- Image 7 (additional) -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="digitak_piano.jpg" class="gallery-img" alt="Resonator Guitar" data-title="Resonator Guitar">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Resonator Guitar" data-title="Resonator Guitar">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -171,7 +635,7 @@
                     <!-- Image 8 (additional) -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="upright-piano.jpg" class="gallery-img" alt="Archtop Guitar" data-title="Archtop Guitar">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Archtop Guitar" data-title="Archtop Guitar">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -193,7 +657,7 @@
                     <!-- Image 9 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="c-wind.jpg" class="gallery-img" alt="Grand Piano" data-title="Grand Piano">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Grand Piano" data-title="Grand Piano">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -209,7 +673,7 @@
                     <!-- Image 10 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="BB_wind.png" class="gallery-img" alt="Upright Piano" data-title="Upright Piano">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Upright Piano" data-title="Upright Piano">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -225,7 +689,7 @@
                     <!-- Image 11 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="picollo-wind.jpg" class="gallery-img" alt="Digital Piano" data-title="Digital Piano">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Digital Piano" data-title="Digital Piano">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -241,7 +705,7 @@
                     <!-- Image 12 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="default_wind.jpg" class="gallery-img" alt="Baby Grand Piano" data-title="Baby Grand Piano">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Baby Grand Piano" data-title="Baby Grand Piano">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -257,7 +721,7 @@
                     <!-- Image 13 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="punjab_tabaka.jpg" class="gallery-img" alt="Concert Grand Piano" data-title="Concert Grand Piano">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Concert Grand Piano" data-title="Concert Grand Piano">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -273,7 +737,7 @@
                     <!-- Image 14 (additional) -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="ajarara_tabala.jpg" class="gallery-img" alt="Player Piano" data-title="Player Piano">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Player Piano" data-title="Player Piano">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -289,7 +753,7 @@
                     <!-- Image 15 (additional) -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="benaras_tabala.png" class="gallery-img" alt="Studio Upright Piano" data-title="Studio Upright Piano">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Studio Upright Piano" data-title="Studio Upright Piano">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -311,7 +775,7 @@
                     <!-- Image 16 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="full_austioc_drum.jpg" class="gallery-img" alt="Violin" data-title="Violin">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Violin" data-title="Violin">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -327,7 +791,7 @@
                     <!-- Image 17 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="mini-drum-set.jpg" class="gallery-img" alt="Cello" data-title="Cello">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Cello" data-title="Cello">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -343,7 +807,7 @@
                     <!-- Image 18 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="austioc_drum.jpg" class="gallery-img" alt="Viola" data-title="Viola">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Viola" data-title="Viola">
                             <div class="img-actions">
 				<button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -359,7 +823,7 @@
                     <!-- Image 19 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="electronic-drum-pad.jpeg" class="gallery-img" alt="Double Bass" data-title="Double Bass">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Double Bass" data-title="Double Bass">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -375,7 +839,7 @@
                     <!-- Image 20 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="concert fluet.jpg" class="gallery-img" alt="Harp" data-title="Harp">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Harp" data-title="Harp">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -397,7 +861,7 @@
                     <!-- Image 21 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="default_fluet.jpeg" class="gallery-img" alt="Flute" data-title="Flute">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Flute" data-title="Flute">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -413,7 +877,7 @@
                     <!-- Image 22 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="picollo-fluet.jpg" class="gallery-img" alt="Clarinet" data-title="Clarinet">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Clarinet" data-title="Clarinet">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -429,7 +893,7 @@
                     <!-- Image 23 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="borque violin.jpg" class="gallery-img" alt="Saxophone" data-title="Saxophone">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Saxophone" data-title="Saxophone">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -445,7 +909,7 @@
                     <!-- Image 24 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="default_violine.jpeg" class="gallery-img" alt="Trumpet" data-title="Trumpet">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Trumpet" data-title="Trumpet">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -461,7 +925,7 @@
                     <!-- Image 25 -->
                     <div class="gallery-card">
                         <div class="gallery-img-container">
-                            <img src="electric_violine.jpg" class="gallery-img" alt="Trombone" data-title="Trombone">
+                            <img src="/api/placeholder/400/300" class="gallery-img" alt="Trombone" data-title="Trombone">
                             <div class="img-actions">
                                 <button class="img-action-btn favorite"><i class="far fa-heart"></i></button>
                                 <button class="img-action-btn download"><i class="fas fa-download"></i></button>
@@ -546,86 +1010,276 @@
             <button id="next-img"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
-    <!-- Add this after the closing </div> of the container but before the script tag -->
-<h2 class="section-title">FEATURED INSTRUMENTS</h2>
-<div class="featured-container">
-    <div class="featured-image">
-        <img src="chotta.png" alt="Featured Instrument 1">
-        <div class="overlay">Classical Guitar Performance</div>
-    </div>
-    <div class="featured-image">
-        <img src="tom&jerry.jpg" alt="Featured Instrument 2">
-        <div class="overlay">Piano Recital</div>
-    </div>
-    <div class="featured-image">
-        <img src="micky.jpeg" alt="Featured Instrument 3">
-        <div class="overlay">Violin Orchestra</div>
-    </div>
-    <div class="featured-image">
-        <img src="kid_tiger.jpg" alt="Featured Instrument 4">
-        <div class="overlay">Trumpet Solo</div>
-    </div>
-    <div class="featured-image">
-        <img src="chotta.png" alt="Featured Instrument 5">
-        <div class="overlay">Drum Performance</div>
-    </div>
-</div>
 
-<h2 class="section-title">INSTRUMENT GALLERIES</h2>
-<div class="galleries-section">
-    <div class="gallery-block" data-gallery="strings">
-        <h3><a href="string_instruments.html" style="text-decoration: none;">MY COLLECTIONS</a></h3>
-        <div class="gallery-images">
-            <img src="doramon.jpg" alt="String Instrument 1">
-            <img src="chotta.png" alt="String Instrument 2">
-            <img src="tom&jerry.jpg" alt="String Instrument 3">
-            <img src="micky.jpeg" alt="String Instrument 4">
-            <img src="kid_tiger.jpg" alt="String Instrument 5">
-        </div>
-    </div>
-    
-    <div class="gallery-block" data-gallery="wind">
-        <h3><a href="string_instruments.html" style="text-decoration: none;">MY PHOTOS</a></h3>
-        <div class="gallery-images">
-            <img src="doramon.jpg" alt="Wind Instrument 1">
-            <img src="chotta.png" alt="Wind Instrument 2">
-            <img src="tom&jerry.jpg" alt="Wind Instrument 3">
-            <img src="micky.jpeg" alt="Wind Instrument 4">
-            <img src="kid_tiger.jpg" alt="Wind Instrument 5">
-        </div>
-    </div>
-    
-    <div class="gallery-block" data-gallery="percussion">
-        <h3><a href="string_instruments.html" style="text-decoration: none;">MEMORIES</a></h3>
-        <div class="gallery-images">
-            <img src="doramon.jpg" alt="Percussion Instrument 1">
-            <img src="chotta.png" alt="Percussion Instrument 2">
-            <img src="tom&jerry.jpg" alt="Percussion Instrument 3">
-            <img src="micky.jpeg" alt="Percussion Instrument 4">
-            <img src="kid_tiger.jpg" alt="Percussion Instrument 5">
-        </div>
-    </div>
-</div>
-
-<h2 class="section-title">TODAY'S HIGHLIGHTS</h2>
-<div class="today-section">
-    <div class="today-image">
-        <img src="doramon.jpg" alt="Today's Highlight 1">
-        <div class="today-caption">New Violin Model Released</div>
-    </div>
-    <div class="today-image">
-        <img src="chotta.png" alt="Today's Highlight 2">
-        <div class="today-caption">Piano Competition Winners</div>
-    </div>
-    <div class="today-image">
-        <img src="kid_tiger.jpg" alt="Today's Highlight 3">
-        <div class="today-caption">Upcoming Guitar Workshop</div>
-    </div>
-    <div class="today-image">
-        <img src="micky.jpeg" alt="Today's Highlight 4">
-        <div class="today-caption">Featured Drummer of the Month</div>
-    </div>
-</div>
-<script src="gallery.js"></script>
+    <!-- JavaScript with minimal code -->
+    <script>
+        // DOM elements
+        const allImages = document.querySelectorAll('.gallery-img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.querySelector('.lightbox-caption');
+        const closeBtn = document.getElementById('close-lightbox');
+        const prevBtn = document.getElementById('prev-img');
+        const nextBtn = document.getElementById('next-img');
+        const searchInput = document.getElementById('search-input');
+        const favoritesEmpty = document.getElementById('favorites-empty');
+        const deletedEmpty = document.getElementById('deleted-empty');
+        const favoritesGallery = document.getElementById('favorites-gallery');
+        const deletedGallery = document.getElementById('deleted-gallery');
+        
+        // Variables
+        let currentImgIndex = 0;
+        let favoritedImages = [];
+        let deletedImages = [];
+        
+        // Tab functionality using HTML data attributes
+        function changeTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Deactivate all tab buttons
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            
+            // Activate selected tab button
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+            
+            // Check for empty favorites or deleted sections
+            updateEmptyStates();
+        }
+        
+        // Manage empty states visibility with HTML display property
+        function updateEmptyStates() {
+            favoritesEmpty.style.display = favoritedImages.length === 0 ? 'block' : 'none';
+            deletedEmpty.style.display = deletedImages.length === 0 ? 'block' : 'none';
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show appropriate empty states
+            updateEmptyStates();
+            
+            // Set up event listeners
+            
+            // Open lightbox on image click
+            allImages.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+            
+            // Close lightbox
+            closeBtn.addEventListener('click', closeLightbox);
+            
+            // Navigate images in lightbox
+            prevBtn.addEventListener('click', showPrevImage);
+            nextBtn.addEventListener('click', showNextImage);
+            
+            // Setup favorite buttons
+            document.querySelectorAll('.img-action-btn.favorite').forEach((btn, index) => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent opening the lightbox
+                    toggleFavorite(index, this);
+                });
+            });
+            
+            // Setup delete buttons
+            document.querySelectorAll('.img-action-btn.delete').forEach((btn, index) => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent opening the lightbox
+                    moveToDeleted(index, this);
+                });
+            });
+            
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                filterImages(this.value.toLowerCase());
+            });
+        });
+        
+        // Lightbox functions
+        function openLightbox(index) {
+            currentImgIndex = index;
+            const currentImg = allImages[index];
+            lightboxImg.src = currentImg.src;
+            lightboxCaption.textContent = currentImg.getAttribute('data-title');
+            lightbox.style.display = 'flex';
+        }
+        
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+        
+        function showPrevImage() {
+            currentImgIndex = (currentImgIndex - 1 + allImages.length) % allImages.length;
+            updateLightboxImage();
+        }
+        
+        function showNextImage() {
+            currentImgIndex = (currentImgIndex + 1) % allImages.length;
+            updateLightboxImage();
+        }
+        
+        function updateLightboxImage() {
+            const currentImg = allImages[currentImgIndex];
+            lightboxImg.src = currentImg.src;
+            lightboxCaption.textContent = currentImg.getAttribute('data-title');
+        }
+        
+        // Favorite and delete functionality with DOM manipulation
+        function toggleFavorite(index, button) {
+            const card = button.closest('.gallery-card');
+            const isFavorited = button.querySelector('i').classList.contains('fas');
+            
+            if (isFavorited) {
+                // Remove from favorites
+                button.querySelector('i').classList.replace('fas', 'far');
+                const favIndex = favoritedImages.indexOf(index);
+                if (favIndex > -1) {
+                    favoritedImages.splice(favIndex, 1);
+                }
+                // Remove from favorites gallery
+                const favoriteCard = document.querySelector(`#favorites-gallery [data-original-index="${index}"]`);
+                if (favoriteCard) {
+                    favoriteCard.remove();
+                }
+            } else {
+                // Add to favorites
+                button.querySelector('i').classList.replace('far', 'fas');
+                favoritedImages.push(index);
+                
+                // Clone card to favorites gallery
+                const clonedCard = card.cloneNode(true);
+                clonedCard.setAttribute('data-original-index', index);
+                
+                // Set up event listeners for the cloned card
+                const clonedImg = clonedCard.querySelector('.gallery-img');
+                clonedImg.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+                
+                const clonedFavBtn = clonedCard.querySelector('.img-action-btn.favorite');
+                clonedFavBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleFavorite(index, this);
+                    // Also update the original button
+                    const originalBtn = document.querySelectorAll('.img-action-btn.favorite')[index];
+                    originalBtn.querySelector('i').classList.replace('far', 'fas');
+                });
+                
+                const clonedDelBtn = clonedCard.querySelector('.img-action-btn.delete');
+                clonedDelBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    moveToDeleted(index, this);
+                });
+                
+                // Add to favorites gallery
+                favoritesGallery.appendChild(clonedCard);
+            }
+            
+            updateEmptyStates();
+        }
+        
+        function moveToDeleted(index, button) {
+            const card = button.closest('.gallery-card');
+            const originalCard = document.querySelectorAll('.gallery-card')[index];
+            
+            // Add to deleted items
+            deletedImages.push(index);
+            
+            // Clone card to deleted gallery
+            const clonedCard = card.cloneNode(true);
+            clonedCard.setAttribute('data-original-index', index);
+            
+            // Set up event listeners for the cloned card
+            const clonedImg = clonedCard.querySelector('.gallery-img');
+            clonedImg.addEventListener('click', function() {
+                openLightbox(index);
+            });
+            
+            // Replace delete button with restore button
+            const delBtnContainer = clonedCard.querySelector('.img-actions');
+            const delBtn = clonedCard.querySelector('.img-action-btn.delete');
+            const restoreBtn = document.createElement('button');
+            restoreBtn.className = 'img-action-btn restore';
+            restoreBtn.innerHTML = '<i class="fas fa-undo"></i>';
+            restoreBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                restoreFromDeleted(index, this);
+            });
+            delBtnContainer.replaceChild(restoreBtn, delBtn);
+            
+            // Add to deleted gallery
+            deletedGallery.appendChild(clonedCard);
+            
+            // Hide the original card
+            if (originalCard) {
+                originalCard.style.display = 'none';
+            }
+            
+            // Also hide in favorites if it exists
+            const favoriteCard = document.querySelector(`#favorites-gallery [data-original-index="${index}"]`);
+            if (favoriteCard) {
+                favoriteCard.style.display = 'none';
+            }
+            
+            updateEmptyStates();
+        }
+        
+        function restoreFromDeleted(index, button) {
+            const card = button.closest('.gallery-card');
+            const originalCard = document.querySelectorAll('.gallery-card')[index];
+            
+            // Show the original card
+            if (originalCard) {
+                originalCard.style.display = 'block';
+            }
+            
+            // Show in favorites if it exists
+            const favoriteCard = document.querySelector(`#favorites-gallery [data-original-index="${index}"]`);
+            if (favoriteCard) {
+                favoriteCard.style.display = 'block';
+            }
+            
+            // Remove from deleted gallery
+            card.remove();
+            
+            // Remove from deleted items
+            const delIndex = deletedImages.indexOf(index);
+            if (delIndex > -1) {
+                deletedImages.splice(delIndex, 1);
+            }
+            
+            updateEmptyStates();
+        }
+        
+        // Search functionality using HTML methods
+        function filterImages(query) {
+            document.querySelectorAll('.gallery-card').forEach(card => {
+                const title = card.querySelector('.img-title').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show/hide category headers based on whether they have visible children
+            document.querySelectorAll('.category-header').forEach(header => {
+                const nextGallery = header.nextElementSibling.querySelector('.gallery');
+                const hasVisibleImages = Array.from(nextGallery.querySelectorAll('.gallery-card'))
+                    .some(card => card.style.display !== 'none');
+                
+                header.style.display = hasVisibleImages ? 'block' : 'none';
+                header.nextElementSibling.style.display = hasVisibleImages ? 'block' : 'none';
+            });
+        }
+    </script>
 </body>
 </html>

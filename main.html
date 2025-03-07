@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musical Instruments Explorer</title>
+    <style>
+        :root {
+            --sunset-gradient: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            --card-background: rgba(255, 255, 255, 0.8);
+            --text-color: #2d3436;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--sunset-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .instrument-card {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            width: 250px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .instrument-card:hover {
+            transform: scale(1.05);
+        }
+
+        .instrument-card img {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .instrument-types {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .instrument-card:hover .instrument-types {
+            display: block;
+        }
+
+        .type-list {
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .type-item {
+            background: #74b9ff;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+            cursor: pointer;
+        }
+
+        .type-item:hover {
+            background: #0984e3;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Hidden by default */
+        .type-image, .type-audio {
+            display: none;
+        }
+
+        /* Show specific image and audio when type is active */
+        .type-item.active {
+            background: #0984e3;
+        }
+
+        .type-image.active, .type-audio.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>MUSICAL INSTRUMNETS EXPLORER</h1>
+    <div class="container">
+        <!-- Guitar Card -->
+        <div class="instrument-card">
+            <img src="Default_guitar.jpeg" alt="Guitar" class="default-image"> 
+            
+            <!-- Additional images for different types -->
+            <img src="acoustic_guitar.jpg" alt="Acoustic Guitar" class="type-image" data-type="Acoustic Guitar">
+            <img src="electric_guitar.jpg" alt="Electric Guitar" class="type-image" data-type="Electric Guitar">
+            <img src="classical_guitar.jpeg" alt="Classical Guitar" class="type-image" data-type="Classical Guitar">
+            
+            <!-- Audio for different types -->
+            <audio class="type-audio" data-type="default">
+                <source src="guitar_music.mp3" type="audio/mpeg"> <!--eee audio default guitar kii -->
+            </audio>
+            <audio class="type-audio" data-type="Acoustic Guitar">
+                <source src="austoic_guitar.mp3" type="audio/mpeg"> <!--eee audio austoic guitar kii -->
+            </audio>
+            <audio class="type-audio" data-type="Electric Guitar">
+                <source src="electric_guitar_.mp3" type="audio/mpeg"> <!--eee audio electric guitar kii -->
+            </audio>
+            <audio class="type-audio" data-type="Classical Guitar">
+                <source src="classical_guitar_.mp3" type="audio/mpeg"> <!--eee audio classical guitar kii -->
+            </audio>
+
+            <h2>Guitar</h2>
+            <div class="instrument-types">
+                <ul class="type-list">
+                    <li class="type-item" data-type="default">Default Guitar</li>
+                    <li class="type-item" data-type="Acoustic Guitar">Acoustic Guitar</li>
+                    <li class="type-item" data-type="Electric Guitar">Electric Guitar</li>
+                    <li class="type-item" data-type="Classical Guitar">Classical Guitar</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- Piano Card -->
+        <div class="instrument-card">
+            <img src="default piano.jpeg" alt="Piano" class="default-image">
+            
+            <!-- Additional images for different types -->
+            <img src="grand-piano.png" alt="Grand Piano" class="type-image" data-type="Grand Piano">
+            <img src="upright-piano.jpg" alt="Upright Piano" class="type-image" data-type="Upright Piano">
+            <img src="digitak_piano.jpg" alt="Digital Piano" class="type-image" data-type="Digital Piano">
+            
+            <!-- Audio for different types -->
+            <audio class="type-audio" data-type="default">
+                 <source src="piano.mp3" type="audio/mpeg"> <!--eee audio defualt piano  kii -->
+            </audio>
+            <audio class="type-audio" data-type="Grand Piano">
+                <source src="grand-piano_.mp3" type="audio/mpeg">   
+            </audio>
+            <audio class="type-audio" data-type="Upright Piano">
+                <source src="upright-piano_.mp3" type="audio/mpeg"> <!--eee audio upright piano  kii -->
+            </audio>
+            <audio class="type-audio" data-type="Digital Piano">
+                <source src="digital_piano..mp3" type="audio/mpeg"> <!--eee audio digital piano  kii -->
+            </audio>
+
+            <h2>Piano</h2>
+            <div class="instrument-types">
+                <ul class="type-list">
+                    <li class="type-item" data-type="default">Default Piano</li>
+                    <li class="type-item" data-type="Grand Piano">Grand Piano</li>
+                    <li class="type-item" data-type="Upright Piano">Upright Piano</li>
+                    <li class="type-item" data-type="Digital Piano">Digital Piano</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Violin Card -->
+        <div class="instrument-card">
+            <img src="default_violine.jpeg" alt="Violin" class="default-image">
+            
+            <!-- Additional images for different types -->
+            <img src="classical_violine.jpg" alt="Classical Violin" class="type-image" data-type="Classical Violin">
+            <img src="electric_violine.jpg" alt="Electric Violin" class="type-image" data-type="Electric Violin">
+            <img src="borque violin.jpg" alt="Baroque Violin" class="type-image" data-type="Baroque Violin">
+            
+            <!-- Audio for different types -->
+            <audio class="type-audio" data-type="default">
+                <source src="violin_music.mp3" type="audio/mpeg"> <!--eee audio default violin  kii -->
+            </audio>
+            <audio class="type-audio" data-type="Classical Violin">
+                <source src="classical_violine_.mp3" type="audio/mpeg"> <!--eee audio default violin  kii -->
+            </audio>
+            <audio class="type-audio" data-type="Electric Violin">
+                <source src="electric_violine_.mp3" type="audio/mpeg"> <!--eee audio electric violin  kii -->
+            </audio>
+            <audio class="type-audio" data-type="Baroque Violin">
+                <source src="borque violin_.mp3" type="audio/mpeg"> <!--eee audio borque violin  kii -->
+            </audio>
+
+            <h2>Violin</h2>
+            <div class="instrument-types">
+                <ul class="type-list">
+                    <li class="type-item" data-type="default">Default Violin</li>
+                    <li class="type-item" data-type="Classical Violin">Classical Violin</li>
+                    <li class="type-item" data-type="Electric Violin">Electric Violin</li>
+                    <li class="type-item" data-type="Baroque Violin">Baroque Violin</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Trumpet Card -->
+        <div class="instrument-card">
+            <img src="default_wind.jpg" alt="Trumpet" class="default-image">
+            
+            <!-- Additional images for different types -->
+            <img src="BB_wind.png" alt="Bb Trumpet" class="type-image" data-type="Bb Trumpet">
+            <img src="c-wind.jpg" alt="C Trumpet" class="type-image" data-type="C Trumpet">
+            <img src="picollo-wind.jpg" alt="Piccolo Trumpet" class="type-image" data-type="Piccolo Trumpet">
+            
+            <!-- Audio for different types -->
+            <audio class="type-audio" data-type="default">
+                <source src="wind_music.mp3" type="audio/mpeg"> <!--eee audio deafult wind   kii -->
+            </audio>
+            <audio class="type-audio" data-type="Bb Trumpet">
+                <source src="c-trumpet.mp3" type="audio/mpeg"> <!--eee audio bb wind   kii -->
+            </audio>
+            <audio class="type-audio" data-type="C Trumpet">
+                <source src="BB_wind_.mp3" type="audio/mpeg"> <!--eee audio c wind   kii -->
+            </audio>
+            <audio class="type-audio" data-type="Piccolo Trumpet">
+                <source src="picollo-wind_.mp3" type="audio/mpeg"> <!--eee audio piccollo wind   kii -->
+            </audio>
+
+            <h2>Trumpet</h2>
+            <div class="instrument-types">
+                <ul class="type-list">
+                    <li class="type-item" data-type="default">Default Trumpet</li>
+                    <li class="type-item" data-type="Bb Trumpet">Bb Trumpet</li>
+                    <li class="type-item" data-type="C Trumpet">C Trumpet</li>
+                    <li class="type-item" data-type="Piccolo Trumpet">Piccolo Trumpet</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- drums -->
+        <div class="instrument-card">
+            <img src="austioc_drum.jpg" alt="austioc_drum" class="default-image">
+            
+            <!-- Additional images for different types -->
+            <img src="mini-drum-set.jpg" alt="mini-drum-set" class="type-image" data-type="Alto Saxophone">
+            <img src="electronic-drum-pad.jpeg" alt="electronic-drum-pad" class="type-image" data-type="Tenor Saxophone">
+            <img src="full_austioc_drum.jpg" alt="full_austioc_drum" class="type-image" data-type="Soprano Saxophone">
+            
+            <!-- Audio for different types -->
+            <audio class="type-audio" data-type="default">
+                <source src="drum_music.mp3" type="audio/mpeg"> <!--eee audio austoiuc drum kii -->
+            </audio>
+            <audio class="type-audio" data-type="Alto Saxophone">
+                <source src="Mini drum set.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Tenor Saxophone">
+                <source src="Electric drum set.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Soprano Saxophone">
+                <source src="Full austoic drum set.mp3" type="audio/mpeg">
+            </audio>
+
+            <h2>DRUMS</h2>
+            <div class="instrument-types">
+                <ul class="type-list">
+                    <li class="type-item" data-type="default">Austioc Drum</li>
+                    <li class="type-item" data-type="Alto Saxophone">Mini Drum Set</li>
+                    <li class="type-item" data-type="Tenor Saxophone">Electric Drum Pad</li>
+                    <li class="type-item" data-type="Soprano Saxophone"> Full Austioc Drum</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Flute Card -->
+        <div class="instrument-card">
+            <img src="default_fluet.jpeg" alt="Flute" class="default-image">
+            
+            <!-- Additional images for different types -->
+            <img src="concert fluet.jpg" alt="Concert Flute" class="type-image" data-type="Concert Flute">
+            <img src="picollo-fluet.jpg" alt="Piccolo" class="type-image" data-type="Piccolo">
+            <img src="alot-flue.jpeg" alt="Alto Flute" class="type-image" data-type="Alto Flute">
+            
+            <!-- Audio for different types -->
+            <audio class="type-audio" data-type="default">
+                <source src="Default fluet.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Concert Flute">
+                <source src="Concert fluet.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Piccolo">
+                <source src="Piccolo flute.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Alto Flute">
+                <source src="Alto flute.mp3" type="audio/mpeg">
+            </audio>
+
+            <h2>Flute</h2>
+            <div class="instrument-types">
+                <ul class="type-list">
+                    <li class="type-item" data-type="default">Default Flute</li>
+                    <li class="type-item" data-type="Concert Flute">Concert Flute</li>
+                    <li class="type-item" data-type="Piccolo">Piccolo</li>
+                    <li class="type-item" data-type="Alto Flute">Alto Flute</li>
+                </ul>
+            </div>
+        </div>
+         <!-- Flute Card -->
+         <div class="instrument-card">
+            <img src="delhi_tagala.png" alt="Flute" class="default-image">
+            
+            <!-- Additional images for different types -->
+            <img src="benaras_tabala.png" alt="Concert Flute" class="type-image" data-type="Concert Flute">
+            <img src="ajarara_tabala.jpg" alt="Piccolo" class="type-image" data-type="Piccolo">
+            <img src="punjab_tabaka.jpg" alt="Alto Flute" class="type-image" data-type="Alto Flute">
+            
+            <!-- Audio for different types -->
+            <audio class="type-audio" data-type="default">
+                <source src="tabala_music.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Concert Flute">
+                <source src="delhi_tabala.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Piccolo">
+                <source src="punjab_tabala.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Alto Flute">
+                <source src="ajarara_tabala_.mp3" type="audio/mpeg">
+            </audio>
+
+            <h2>Tabala</h2>
+            <div class="instrument-types">
+                <ul class="type-list">
+                    <li class="type-item" data-type="default">Delhi Tabala</li>
+                    <li class="type-item" data-type="Concert Flute">Benaras Tabala</li>
+                    <li class="type-item" data-type="Piccolo">Punjabi Tabala</li>
+                    <li class="type-item" data-type="Alto Flute">Ajrara Tabala</li>
+                </ul>
+            </div>
+        </div>
+         <!-- Flute Card -->
+         <div class="instrument-card">
+            <img src="Kharaj Pancham Sitar.jpg" alt="Flute" class="default-image">
+            
+            <!-- Additional images for different types -->
+            <img src="Gandhar Pancham Sitar.jpg" alt="Concert Flute" class="type-image" data-type="Concert Flute">
+            <img src="Bass Sitar.png" alt="Piccolo" class="type-image" data-type="Piccolo">
+            <img src="Electric sitar.jpg" alt="Alto Flute" class="type-image" data-type="Alto Flute">
+            
+            <!-- Audio for different types -->
+            <audio class="type-audio" data-type="default">
+                <source src="Kharaj Pancham Sitar_.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Concert Flute">
+                <source src="Gandhar Pancham Sitar_.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Piccolo">
+                <source src="Bass Sitar_.mp3" type="audio/mpeg">
+            </audio>
+            <audio class="type-audio" data-type="Alto Flute">
+                <source src="Electric sitar_.mp3" type="audio/mpeg">
+            </audio>
+
+            <h2>SITARA</h2>
+            <div class="instrument-types">
+                <ul class="type-list">
+                    <li class="type-item" data-type="default">Kharaj Pancham Sitar</li>
+                    <li class="type-item" data-type="Concert Flute">Gandhar Pancham Sitar</li>
+                    <li class="type-item" data-type="Piccolo">Bass Sitar</li>
+                    <li class="type-item" data-type="Alto Flute">Electric Sitar</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+
+   <script>
+    document.querySelectorAll('.instrument-card').forEach(card => {
+    const typeItems = card.querySelectorAll('.type-item');
+    const typeImages = card.querySelectorAll('.type-image');
+    const typeAudios = card.querySelectorAll('.type-audio');
+    const defaultImage = card.querySelector('.default-image');
+
+    // Track currently playing audio and active type
+    let currentAudio = null;
+    let activeType = null;
+
+    typeItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const type = item.getAttribute('data-type');
+            const isCurrentlyActive = item.classList.contains('active');
+            
+            // Find the audio element for this type
+            let audioToToggle = null;
+            typeAudios.forEach(audio => {
+                if (audio.getAttribute('data-type') === type) {
+                    audioToToggle = audio;
+                }
+            });
+            
+            // If clicking the same button that's already active
+            if (isCurrentlyActive && audioToToggle) {
+                // If audio is playing, pause it
+                if (!audioToToggle.paused) {
+                    audioToToggle.pause();
+                    // Keep the button active but indicate audio is paused
+                    item.style.opacity = "0.7";
+                    return;
+                } else {
+                    // If audio was paused, play it again
+                    audioToToggle.play().catch(error => {
+                        console.error('Error playing audio:', error);
+                    });
+                    item.style.opacity = "1";
+                    return;
+                }
+            }
+            
+            // Reset previous active states if switching to a different button
+            typeItems.forEach(t => {
+                t.classList.remove('active');
+                t.style.opacity = "1";
+            });
+            
+            typeImages.forEach(img => img.classList.remove('active'));
+            
+            // Stop all audio
+            typeAudios.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+
+            // Activate current type
+            item.classList.add('active');
+            activeType = type;
+
+            // Show/hide appropriate image
+            if (type === 'default') {
+                defaultImage.style.display = 'block';
+                typeImages.forEach(img => img.classList.remove('active'));
+            } else {
+                defaultImage.style.display = 'none';
+                typeImages.forEach(img => {
+                    if (img.getAttribute('data-type') === type) {
+                        img.classList.add('active');
+                    }
+                });
+            }
+
+            // Play corresponding audio
+            if (audioToToggle) {
+                audioToToggle.play().catch(error => {
+                    console.error('Error playing audio:', error);
+                });
+                currentAudio = audioToToggle;
+            }
+        });
+    });
+});
+   </script>
+   </body>
+   </html>
